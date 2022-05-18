@@ -17,7 +17,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public List<User> searchByName(String username) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from User us join fetch us.roles where us.username = :username", User.class)
+        return session.createQuery("from User us left join fetch us.roles where us.username = :username", User.class)
                 .setParameter("username", username).getResultList();
     }
 }

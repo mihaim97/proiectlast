@@ -2,8 +2,8 @@ package com.ubb.ro.proiect1.controller;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.ubb.ro.proiect1.security.UserAuth;
-import com.ubb.ro.proiect1.service.TestService;
+import com.ubb.ro.proiect1.security.util.JwtProperties;
+import com.ubb.ro.proiect1.service.user.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +20,10 @@ public class TestController {
     private TestService testService;
 
     @GetMapping("/validate")
-    public ResponseEntity<String> testController(UserAuth userAuth, HttpServletRequest request) {
+    public ResponseEntity<String> testController(HttpServletRequest request) {
         try {
             String token = request.getHeader("Authorization");
-            String username = JWT.require(Algorithm.HMAC512(("SecretKeyProiect").getBytes()))
+            String username = JWT.require(Algorithm.HMAC512((JwtProperties.SECRET).getBytes()))
                     .build()
                     .verify(token.replace("Bearer ", ""))
                     .getSubject();
@@ -36,4 +36,11 @@ public class TestController {
             throw new RuntimeException("Invalid token");
         }
     }
+
+    @GetMapping("/simple")
+    public ResponseEntity<String> simpleMessage() {
+        this.testService.performOperation();
+        return ResponseEntity.ok("{\"response\":\"ok\"}");
+    }
+
 }

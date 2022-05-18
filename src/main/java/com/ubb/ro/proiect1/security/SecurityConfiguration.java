@@ -1,72 +1,79 @@
 package com.ubb.ro.proiect1.security;
 
-import com.ubb.ro.proiect1.security.config.SecureURL;
-import com.ubb.ro.proiect1.security.config.SecureUrlConfiguration;
+import com.ubb.ro.proiect1.security.util.CorsConfigurationImplement;
 import com.ubb.ro.proiect1.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
-public class SecurityConfiguration {
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserAuth userAuth;
+    private PersonalUserDetailsService personalUserDetailsService;
 
     @Autowired
     private UserService userService;
 
-    @Bean
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(daoAuthenticationProvider());
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/jwt/card/in").permitAll()
+                .antMatchers("/**").authenticated();
+
+        http.cors().configurationSource(corsConfigurationSource());
+    }
+
+   /* @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("*");
+                registry.addMapping("*").allowedHeaders("*");
             }
         };
-    }
-
-    @Bean
-    public FilterRegistrationBean<AuthenticationFilter> registerFilterAuthenticationBean() {
-        FilterRegistrationBean<AuthenticationFilter> authenticationFilterFilterRegistrationBean
-                = new FilterRegistrationBean<>();
-        authenticationFilterFilterRegistrationBean.setFilter(authenticationFilter());
-        authenticationFilterFilterRegistrationBean.addUrlPatterns("/login");
-        authenticationFilterFilterRegistrationBean.setOrder(1);
-        return authenticationFilterFilterRegistrationBean;
-    }
-
-/*    @Bean
-    public FilterRegistrationBean<ValidateTokenFilter> registerFilterValidation() {
-        FilterRegistrationBean<ValidateTokenFilter> authenticationFilterFilterRegistrationBean
-                = new FilterRegistrationBean<>();
-        authenticationFilterFilterRegistrationBean.setFilter(new ValidateTokenFilter());
-        authenticationFilterFilterRegistrationBean.addUrlPatterns("/validate");
-        authenticationFilterFilterRegistrationBean.setOrder(1);
-        return authenticationFilterFilterRegistrationBean;
     }*/
 
     @Bean
-    public AuthenticationFilter authenticationFilter() {
-        return new AuthenticationFilter(userAuth, userService, passwordEncoder());
-    }
-
-    @Bean
-    public SecureURL secureURLConfiguration() {
-        return new SecureUrlConfiguration.ResourceHelper()
-                .protectResource("/test", "ROLE_ADMIN", "ROLE_TEST")
-                .authenticatedUser(userAuth)
-                .build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    DaoAuthenticationProvider daoAuthenticationProvider() {
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(personalUserDetailsService);
+        daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+        return daoAuthenticationProvider;
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        return new CorsConfigurationImplement();
     }
 
 

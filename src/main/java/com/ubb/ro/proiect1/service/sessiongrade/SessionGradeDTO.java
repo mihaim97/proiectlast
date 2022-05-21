@@ -1,36 +1,14 @@
-package com.ubb.ro.proiect1.entity;
+package com.ubb.ro.proiect1.service.sessiongrade;
+
+import com.ubb.ro.proiect1.entity.ClassEntity;
+import com.ubb.ro.proiect1.entity.SessionEntity;
+import com.ubb.ro.proiect1.entity.User;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "session_grades")
-public class SessionGrade {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
-
-    @Column(name = "grade")
-    private float grade;
-
-    @Column(name = "promotion_date")
-    private LocalDate promotionDate;
-
-    @ManyToOne
-    @JoinColumn(name = "id_classes")
-    private ClassEntity classId;
-
-    @ManyToOne
-    @JoinColumn(name = "id_session")
-    private SessionEntity sessionId;
-
-    @ManyToOne
-    @JoinColumn(name = "id_student")
-    private User studentId;
-
-    public SessionGrade(int id, float grade, LocalDate promotionDate, ClassEntity classId, SessionEntity sessionId, User studentId) {
+public class SessionGradeDTO {
+    public SessionGradeDTO(int id, float grade, LocalDate promotionDate, ClassEntity classId, SessionEntity sessionId, User studentId) {
         this.id = id;
         this.grade = grade;
         this.promotionDate = promotionDate;
@@ -39,7 +17,7 @@ public class SessionGrade {
         this.studentId = studentId;
     }
 
-    public SessionGrade() {
+    public SessionGradeDTO() {
     }
 
     public int getId() {
@@ -89,4 +67,17 @@ public class SessionGrade {
     public void setStudentId(User studentId) {
         this.studentId = studentId;
     }
+
+    private int id;
+
+    private float grade;
+
+    private LocalDate promotionDate;
+
+
+    private ClassEntity classId;
+
+    private SessionEntity sessionId;
+
+    private User studentId;
 }

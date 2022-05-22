@@ -3,9 +3,11 @@ package com.ubb.ro.proiect1.controller;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.ubb.ro.proiect1.security.util.JwtProperties;
+import com.ubb.ro.proiect1.service.role.RoleService;
 import com.ubb.ro.proiect1.service.user.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,9 @@ public class TestController {
 
     @Autowired
     private TestService testService;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping("/validate")
     public ResponseEntity<String> testController(HttpServletRequest request) {
@@ -42,5 +47,12 @@ public class TestController {
         this.testService.performOperation();
         return ResponseEntity.ok("{\"response\":\"ok\"}");
     }
+
+    @GetMapping("/role/admin")
+    public ResponseEntity<String> hasAdminRole(Authentication authentication) {
+        this.roleService.hasAdminRole(authentication);
+        return ResponseEntity.ok("{\"response\":\"ok\"}");
+    }
+
 
 }

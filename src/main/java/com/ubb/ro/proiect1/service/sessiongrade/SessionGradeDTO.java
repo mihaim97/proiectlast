@@ -1,15 +1,32 @@
 package com.ubb.ro.proiect1.service.sessiongrade;
 
-import com.ubb.ro.proiect1.entity.ClassEntity;
-import com.ubb.ro.proiect1.entity.SessionEntity;
-import com.ubb.ro.proiect1.entity.User;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 public class SessionGradeDTO {
-    public SessionGradeDTO(int id, float grade, LocalDate promotionDate, ClassEntity classId, SessionEntity sessionId, User studentId) {
+
+    private int id;
+
+    private float grade;
+
+    private LocalDate promotionDate;
+
+    private int classId;
+
+    private int sessionId;
+
+    private int studentId;
+
+    public SessionGradeDTO(int id, float grade, LocalDate promotionDate, int classId, int sessionId, int studentId) {
         this.id = id;
+        this.grade = grade;
+        this.promotionDate = promotionDate;
+        this.classId = classId;
+        this.sessionId = sessionId;
+        this.studentId = studentId;
+    }
+
+    public SessionGradeDTO(float grade, LocalDate promotionDate, int classId, int sessionId, int studentId) {
         this.grade = grade;
         this.promotionDate = promotionDate;
         this.classId = classId;
@@ -44,40 +61,27 @@ public class SessionGradeDTO {
         this.promotionDate = promotionDate;
     }
 
-    public ClassEntity getClassId() {
+    public int getClassId() {
         return classId;
     }
 
-    public void setClassId(ClassEntity classId) {
+    public void setClassId(int classId) {
         this.classId = classId;
     }
 
-    public SessionEntity getSessionId() {
+    public int getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(SessionEntity sessionId) {
+    public void setSessionId(int sessionId) {
         this.sessionId = sessionId;
     }
 
-    public User getStudentId() {
+    public int getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(User studentId) {
+    public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
-
-    private int id;
-
-    private float grade;
-
-    private LocalDate promotionDate;
-
-
-    private ClassEntity classId;
-
-    private SessionEntity sessionId;
-
-    private User studentId;
 }

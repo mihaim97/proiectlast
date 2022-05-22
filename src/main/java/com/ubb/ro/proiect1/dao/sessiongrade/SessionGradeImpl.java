@@ -1,11 +1,12 @@
 package com.ubb.ro.proiect1.dao.sessiongrade;
 
-import com.ubb.ro.proiect1.entity.SessionEntity;
 import com.ubb.ro.proiect1.entity.SessionGrade;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class SessionGradeImpl implements SessionGradeDAO{
@@ -30,5 +31,12 @@ public class SessionGradeImpl implements SessionGradeDAO{
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from SessionGrade where id =:id", SessionGrade.class)
                 .setParameter("id", id).getSingleResult();
+    }
+
+    @Override
+    public List<SessionGrade> findForUser(int userId) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from SessionGrade sg where sg.studentId.id =:id", SessionGrade.class)
+                .setParameter("id", userId).getResultList();
     }
 }

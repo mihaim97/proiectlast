@@ -39,6 +39,17 @@ public class SessionGrade {
         this.studentId = studentId;
     }
 
+    public SessionGrade(float grade, LocalDate promotionDate, ClassEntity classId, SessionEntity sessionId, User studentId) {
+        this.id = id;
+        this.grade = grade;
+        this.promotionDate = promotionDate;
+        this.classId = classId;
+        this.sessionId = sessionId;
+        this.studentId = studentId;
+    }
+
+
+
     public SessionGrade() {
     }
 

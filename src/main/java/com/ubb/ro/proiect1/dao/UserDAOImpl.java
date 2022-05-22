@@ -20,4 +20,11 @@ public class UserDAOImpl implements UserDAO {
         return session.createQuery("from User us left join fetch us.roles where us.username = :username", User.class)
                 .setParameter("username", username).getResultList();
     }
+
+    @Override
+    public User searchById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from User where id = :id", User.class)
+                .setParameter("id", id).getSingleResult();
+    }
 }

@@ -2,6 +2,7 @@ package com.ubb.ro.proiect1.dao.classentity;
 
 import com.ubb.ro.proiect1.entity.ClassEntity;
 import com.ubb.ro.proiect1.entity.SessionEntity;
+import com.ubb.ro.proiect1.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,15 @@ public class ClassEntityDAOImpl implements ClassEntityDAO {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from ClassEntity where id =:id", ClassEntity.class)
                 .setParameter("id", id).getSingleResult();
+    }
+
+
+
+    @Override
+    public List<ClassEntity> findAll() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from ClassEntity ce", ClassEntity.class)
+                .getResultList();
     }
 
 }

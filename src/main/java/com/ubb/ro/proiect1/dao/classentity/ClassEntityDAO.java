@@ -13,4 +13,6 @@ public interface ClassEntityDAO {
 
     ClassEntity findById(int id);
 
+    List<ClassEntity> findAll();
+
 }

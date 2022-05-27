@@ -24,8 +24,24 @@ public class ClassEntity {
     @JoinColumn(name = "teacher_id")
     private User teacherId;
 
+    public ClassEntity(int id, String name, int semester, int credits, User teacherId) {
+        this.id = id;
+        this.name = name;
+        this.semester = semester;
+        this.credits = credits;
+        this.teacherId = teacherId;
+    }
+
+    public ClassEntity(String name, int semester, int credits, User teacherId) {
+        this.name = name;
+        this.semester = semester;
+        this.credits = credits;
+        this.teacherId = teacherId;
+    }
+
     public ClassEntity() {
     }
+
 
     public int getId() {
         return id;

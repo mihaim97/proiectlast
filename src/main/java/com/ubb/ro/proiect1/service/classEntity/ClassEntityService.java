@@ -8,6 +8,7 @@ import java.util.List;
 public interface ClassEntityService {
 
     void addClass(ClassEntityDTO classEntity);
+
     void delete(int id);
 
     ClassEntityDTO findById(int id);

@@ -27,7 +27,6 @@ public class ClassEntityServiceImpl implements ClassEntityService {
     @Autowired
     private UserDAO userDAO;
 
-
     @Override
     @Transactional
     public void addClass(ClassEntityDTO classEntityDTO) {
@@ -41,7 +40,6 @@ public class ClassEntityServiceImpl implements ClassEntityService {
     public void delete(int id) {
         ClassEntity classEntity = this.classEntityDAO.findById(id);
         classEntityDAO.remove(classEntity);
-
     }
 
     @Override

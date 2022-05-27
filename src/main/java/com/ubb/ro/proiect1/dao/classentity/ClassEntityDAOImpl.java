@@ -35,8 +35,6 @@ public class ClassEntityDAOImpl implements ClassEntityDAO {
                 .setParameter("id", id).getSingleResult();
     }
 
-
-
     @Override
     public List<ClassEntity> findAll() {
         Session session = sessionFactory.getCurrentSession();

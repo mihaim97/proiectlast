@@ -32,12 +32,12 @@ public class TestController {
                     .build()
                     .verify(token.replace("Bearer ", ""))
                     .getSubject();
-            if(username != null) {
+            if (username != null) {
                 System.out.println("valid token");
                 return ResponseEntity.ok("{\"response\":\"ok\"}");
             }
             throw new RuntimeException("Invalid token");
-        }catch (Exception exception) {
+        } catch (Exception exception) {
             throw new RuntimeException("Invalid token");
         }
     }

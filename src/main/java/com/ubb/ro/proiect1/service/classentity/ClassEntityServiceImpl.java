@@ -1,10 +1,11 @@
-package com.ubb.ro.proiect1.service.classEntity;
+package com.ubb.ro.proiect1.service.classentity;
 
 import com.ubb.ro.proiect1.dao.UserDAO;
 import com.ubb.ro.proiect1.dao.classentity.ClassEntityDAO;
 import com.ubb.ro.proiect1.dao.session.SessionDAO;
+import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTO;
+import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTOView;
 import com.ubb.ro.proiect1.entity.ClassEntity;
-import com.ubb.ro.proiect1.entity.SessionEntity;
 import com.ubb.ro.proiect1.entity.User;
 import com.ubb.ro.proiect1.util.SingleResultFromList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 public class ClassEntityServiceImpl implements ClassEntityService {
 
     @Autowired
-    private ClassEntityDAO  classEntityDAO;
+    private ClassEntityDAO classEntityDAO;
 
     @Autowired
     private SessionDAO sessionDAO;
@@ -53,13 +54,13 @@ public class ClassEntityServiceImpl implements ClassEntityService {
     @Transactional
     public List<ClassEntityDTOView> getClasses(Authentication authentication) {
         User user = SingleResultFromList.getSingleResult(this.userDAO.searchByName(authentication.getName()));
-        if(user != null){
+        if (user != null) {
             return this.classEntityDAO.findAll().stream().map(this::toDto).collect(Collectors.toList());
         }
         return null;
     }
 
-    private ClassEntityDTOView toDto(ClassEntity classEntity){
+    private ClassEntityDTOView toDto(ClassEntity classEntity) {
         ClassEntityDTOView classEntityDTOView = new ClassEntityDTOView();
         classEntityDTOView.setName(classEntity.getName());
         classEntityDTOView.setSemester(classEntity.getSemester());

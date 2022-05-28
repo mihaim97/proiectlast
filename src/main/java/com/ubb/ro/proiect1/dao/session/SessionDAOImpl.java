@@ -34,6 +34,17 @@ public class SessionDAOImpl implements SessionDAO {
     }
 
     @Override
+    public List<SessionEntity> findBySemesterAndUniversityYear(String universityYear, Integer semester) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from SessionEntity" +
+                        " where universityYear = :universityYear and semester = :semester",
+                        SessionEntity.class)
+                .setParameter("universityYear", universityYear)
+                .setParameter("semester", semester)
+                .getResultList();
+    }
+
+    @Override
     public List<SessionEntity> queryForYear(int year) {
         return null;
     }

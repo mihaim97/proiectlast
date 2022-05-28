@@ -4,6 +4,8 @@ import com.ubb.ro.proiect1.dao.UserDAO;
 import com.ubb.ro.proiect1.dao.classentity.ClassEntityDAO;
 import com.ubb.ro.proiect1.dao.session.SessionDAO;
 import com.ubb.ro.proiect1.dao.sessiongrade.SessionGradeDAO;
+import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeDTO;
+import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeViewDTO;
 import com.ubb.ro.proiect1.entity.ClassEntity;
 import com.ubb.ro.proiect1.entity.SessionEntity;
 import com.ubb.ro.proiect1.entity.SessionGrade;
@@ -16,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -41,6 +44,7 @@ public class SessionGradeServiceImpl implements SessionGradeService {
     public void addSessionGrade(SessionGradeDTO sessionGradeDTO) {
         ClassEntity classEntity = this.classEntityDAO.findById(sessionGradeDTO.getSessionId());
         SessionEntity session = this.sessionDAO.findById(sessionGradeDTO.getSessionId());
+        this.validateData(session, classEntity, sessionGradeDTO);
         User user = this.userDAO.searchById(sessionGradeDTO.getSessionId());
         SessionGrade sessionGrade = new SessionGrade(sessionGradeDTO.getGrade(), sessionGradeDTO.getPromotionDate(),
                 classEntity, session, user);
@@ -85,5 +89,15 @@ public class SessionGradeServiceImpl implements SessionGradeService {
         dto.setClassName(sessionGrade.getClassId().getName());
         dto.setPromotionDate(sessionGrade.getPromotionDate());
         return dto;
+    }
+
+    private void validateData(SessionEntity session, ClassEntity classEntity, SessionGradeDTO sessionGradeDTO) {
+        if(!session.getClasses().contains(classEntity)) {
+            throw new RuntimeException("Materia nu face parte din sesiunea curenta");
+        }
+        LocalDate promotionDate = sessionGradeDTO.getPromotionDate().toLocalDate();
+        if(!(promotionDate.isAfter(session.getDateStart()) && promotionDate.isBefore(session.getDateEnd()))) {
+            throw new RuntimeException("Data promovari nu este in intervalul sesiuni");
+        }
     }
 }

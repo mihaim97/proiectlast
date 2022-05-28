@@ -1,6 +1,8 @@
-package com.ubb.ro.proiect1.service.classEntity;
+package com.ubb.ro.proiect1.service.classentity;
 
 
+import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTO;
+import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTOView;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;

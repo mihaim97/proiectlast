@@ -1,8 +1,8 @@
 package com.ubb.ro.proiect1.controller;
 
-import com.ubb.ro.proiect1.service.sessiongrade.SessionGradeDTO;
+import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeDTO;
 import com.ubb.ro.proiect1.service.sessiongrade.SessionGradeService;
-import com.ubb.ro.proiect1.service.sessiongrade.SessionGradeViewDTO;
+import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeViewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,8 +18,7 @@ public class SessionGradeController {
     @Autowired
     private SessionGradeService sessionGradeService;
 
-
-    @PostMapping(value = "/addsessionsrade", consumes = "application/json")
+    @PostMapping(value = "/addsessiongrade", consumes = "application/json")
     public void createPerson(@RequestBody SessionGradeDTO sessionGradeDTO) {
         sessionGradeService.addSessionGrade(sessionGradeDTO);
     }

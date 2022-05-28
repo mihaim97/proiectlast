@@ -1,6 +1,6 @@
-package com.ubb.ro.proiect1.service.classEntity;
+package com.ubb.ro.proiect1.dto.session;
 
-public class ClassEntityDTO {
+public class ClassEntityDTOView {
 
     private int id;
 
@@ -8,21 +8,11 @@ public class ClassEntityDTO {
 
     private int semester;
 
-     private int credits;
+    private int credits;
 
-    private int teacherID;
+    private String teacherName;
 
-
-    public ClassEntityDTO(int id, String name, int semester, int credits, int teacherID) {
-        this.id = id;
-        this.name = name;
-        this.semester = semester;
-        this.credits = credits;
-        this.teacherID = teacherID;
-    }
-
-    public ClassEntityDTO(){
-
+    public ClassEntityDTOView() {
     }
 
     public int getId() {
@@ -57,11 +47,11 @@ public class ClassEntityDTO {
         this.credits = credits;
     }
 
-    public int getTeacherID() {
-        return teacherID;
+    public String getTeacherName() {
+        return teacherName;
     }
 
-    public void setTeacherID(int teacherID) {
-        this.teacherID = teacherID;
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 }

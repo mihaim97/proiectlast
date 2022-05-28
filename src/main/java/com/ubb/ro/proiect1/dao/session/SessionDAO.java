@@ -12,6 +12,8 @@ public interface SessionDAO {
 
     SessionEntity findById(int id);
 
+    List<SessionEntity> findBySemesterAndUniversityYear(String universityYear, Integer semester);
+
     List<SessionEntity> queryForYear(int year);
 
 }

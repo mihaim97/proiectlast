@@ -1,4 +1,4 @@
-package com.ubb.ro.proiect1.service.classEntity;
+package com.ubb.ro.proiect1.dto.classentity;
 
 public class ClassEntityDTOView {
 

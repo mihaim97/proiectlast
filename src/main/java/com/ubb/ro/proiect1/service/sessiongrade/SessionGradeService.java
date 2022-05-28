@@ -1,6 +1,8 @@
 package com.ubb.ro.proiect1.service.sessiongrade;
 
 
+import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeDTO;
+import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeViewDTO;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;

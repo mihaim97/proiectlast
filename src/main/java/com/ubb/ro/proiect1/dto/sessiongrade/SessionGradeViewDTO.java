@@ -1,17 +1,18 @@
-package com.ubb.ro.proiect1.service.sessiongrade;
+package com.ubb.ro.proiect1.dto.sessiongrade;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class SessionGradeViewDTO {
 
     private float grade;
 
-    private LocalDate promotionDate;
+    private LocalDateTime promotionDate;
 
     private String className;
 
-    public SessionGradeViewDTO(float grade, LocalDate promotionDate, String className) {
+    public SessionGradeViewDTO(float grade, LocalDateTime promotionDate, String className) {
         this.grade = grade;
         this.promotionDate = promotionDate;
         this.className = className;
@@ -28,11 +29,11 @@ public class SessionGradeViewDTO {
         this.grade = grade;
     }
 
-    public LocalDate getPromotionDate() {
+    public LocalDateTime getPromotionDate() {
         return promotionDate;
     }
 
-    public void setPromotionDate(LocalDate promotionDate) {
+    public void setPromotionDate(LocalDateTime promotionDate) {
         this.promotionDate = promotionDate;
     }
 

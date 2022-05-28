@@ -1,6 +1,7 @@
 package com.ubb.ro.proiect1.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "pr_classes")
@@ -81,5 +82,18 @@ public class ClassEntity {
 
     public void setTeacherId(User teacherId) {
         this.teacherId = teacherId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClassEntity that = (ClassEntity) o;
+        return semester == that.semester && credits == that.credits && name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, semester, credits);
     }
 }

@@ -25,6 +25,12 @@ public class SessionEntity {
     @Column(name = "session_type")
     private String sessionType;
 
+    @Column(name = "university_year")
+    private String universityYear;
+
+    @Column(name = "semester")
+    private int semester;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "sessionId")
     private List<SessionGrade> sessionGrades;
 
@@ -35,6 +41,15 @@ public class SessionEntity {
             inverseJoinColumns = {@JoinColumn(name = "id_classes")}
     )
     private List<ClassEntity> classes;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(
+            name = "pr_session_student",
+            joinColumns = {@JoinColumn(name = "id_session")},
+            inverseJoinColumns = {@JoinColumn(name = "id_student")}
+    )
+    private List<User> students;
+
 
     public SessionEntity() {
     }
@@ -93,5 +108,29 @@ public class SessionEntity {
 
     public void setClasses(List<ClassEntity> classes) {
         this.classes = classes;
+    }
+
+    public List<User> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<User> students) {
+        this.students = students;
+    }
+
+    public String getUniversityYear() {
+        return universityYear;
+    }
+
+    public void setUniversityYear(String universityYear) {
+        this.universityYear = universityYear;
+    }
+
+    public int getSemester() {
+        return semester;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
     }
 }

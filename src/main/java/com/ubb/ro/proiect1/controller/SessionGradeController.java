@@ -34,4 +34,14 @@ public class SessionGradeController {
         return ResponseEntity.ok(this.sessionGradeService.getGradesForStudent(authentication));
     }
 
+    @GetMapping("/sessionGrades/classid/{id}")
+    public List<SessionGradeViewDTO> getPromotedStudentsByClassId(@PathVariable String id) {
+        return this.sessionGradeService.getPromotedStudentsByClassId(Integer.parseInt(id));
+    }
+
+    @GetMapping("/sessionGrades/failed/classid/{id}")
+    public List<SessionGradeViewDTO> getFailedStudentsByClassId(@PathVariable String id) {
+        return this.sessionGradeService.getFailedStudentsByClassId(Integer.parseInt(id));
+    }
+
 }

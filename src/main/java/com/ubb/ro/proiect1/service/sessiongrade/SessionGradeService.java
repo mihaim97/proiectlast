@@ -15,4 +15,7 @@ public interface SessionGradeService {
 
     List<SessionGradeViewDTO> getGradesForStudent(Authentication authentication);
 
+    List<SessionGradeViewDTO> getPromotedStudentsByClassId(int classId);
+
+    List<SessionGradeViewDTO> getFailedStudentsByClassId(int classId);
 }

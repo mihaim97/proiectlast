@@ -14,4 +14,6 @@ public interface ClassEntityService {
     ClassEntityDTO findById(int id);
 
     List<ClassEntityDTOView> getClasses(Authentication authentication);
+
+    List getClassesPercentage(int id, Authentication authentication);
 }

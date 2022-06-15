@@ -23,6 +23,11 @@ public class ClassEntity {
         return ResponseEntity.ok(this.classEntityService.getClasses(authentication));
     }
 
+    @GetMapping(value = "/classes/percentage/{id}")
+    public ResponseEntity<List> getPercentage(@PathVariable("id") int id, Authentication authentication){
+        return ResponseEntity.ok(this.classEntityService.getClassesPercentage(id, authentication));
+    }
+
     @PostMapping(value = "/addclass", consumes = "application/json")
     public void addClass(@RequestBody ClassEntityDTO classEntityDTO){
         classEntityService.addClass(classEntityDTO);

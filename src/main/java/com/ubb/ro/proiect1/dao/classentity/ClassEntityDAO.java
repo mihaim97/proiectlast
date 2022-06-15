@@ -13,6 +13,6 @@ public interface ClassEntityDAO {
 
     ClassEntity findById(int id);
 
+    List findPercentage(int id);
     List<ClassEntity> findAll();
-
 }

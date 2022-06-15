@@ -59,6 +59,16 @@ public class ClassEntityServiceImpl implements ClassEntityService {
         return null;
     }
 
+    @Override
+    public List getClassesPercentage(int id, Authentication authentication) {
+        ClassEntity classEntity = classEntityDAO.findById(id);
+        User user = SingleResultFromList.getSingleResult(this.userDAO.searchByName(authentication.getName()));
+        if(user != null){
+            return this.classEntityDAO.findPercentage(id);
+        }
+        return null;
+    }
+
     private ClassEntityDTOView toDto(ClassEntity classEntity){
         ClassEntityDTOView classEntityDTOView = new ClassEntityDTOView();
         classEntityDTOView.setName(classEntity.getName());
@@ -68,4 +78,5 @@ public class ClassEntityServiceImpl implements ClassEntityService {
         return classEntityDTOView;
 
     }
+
 }

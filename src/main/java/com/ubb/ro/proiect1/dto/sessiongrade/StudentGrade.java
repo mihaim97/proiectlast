@@ -1,6 +1,7 @@
 package com.ubb.ro.proiect1.dto.sessiongrade;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class StudentGrade {
 
@@ -8,7 +9,7 @@ public class StudentGrade {
 
     private String studentName;
 
-    private LocalDate promotionDate;
+    private LocalDateTime promotionDate;
 
     private float grade;
 
@@ -31,11 +32,11 @@ public class StudentGrade {
         this.studentName = studentName;
     }
 
-    public LocalDate getPromotionDate() {
+    public LocalDateTime getPromotionDate() {
         return promotionDate;
     }
 
-    public void setPromotionDate(LocalDate promotionDate) {
+    public void setPromotionDate(LocalDateTime promotionDate) {
         this.promotionDate = promotionDate;
     }
 

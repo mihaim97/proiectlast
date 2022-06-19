@@ -4,10 +4,7 @@ import com.ubb.ro.proiect1.dao.UserDAO;
 import com.ubb.ro.proiect1.dao.classentity.ClassEntityDAO;
 import com.ubb.ro.proiect1.dao.session.SessionDAO;
 import com.ubb.ro.proiect1.dao.sessiongrade.SessionGradeDAO;
-import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeDTO;
-import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeViewDTO;
-import com.ubb.ro.proiect1.dto.sessiongrade.StudentGrade;
-import com.ubb.ro.proiect1.dto.sessiongrade.TeacherSessionClasses;
+import com.ubb.ro.proiect1.dto.sessiongrade.*;
 import com.ubb.ro.proiect1.entity.ClassEntity;
 import com.ubb.ro.proiect1.entity.SessionEntity;
 import com.ubb.ro.proiect1.entity.SessionGrade;
@@ -56,6 +53,7 @@ public class SessionGradeServiceImpl implements SessionGradeService {
     @Override
     @Transactional
     public void delete(int id) {
+        System.out.println(id);
         SessionGrade sessionGrade = this.sessionGradeDAO.findById(id);
         sessionGradeDAO.remove(sessionGrade);
     }
@@ -67,6 +65,16 @@ public class SessionGradeServiceImpl implements SessionGradeService {
         return new SessionGradeDTO(sessionGrade.getId(), sessionGrade.getGrade(), sessionGrade.getPromotionDate(),
                 sessionGrade.getClassId().getId(), sessionGrade.getSessionId().getId(),
                 sessionGrade.getStudentId().getId());
+    }
+
+    @Override
+    @Transactional
+    public StudentGrade updateStudentGrade(Authentication authentication, UpdateSessionGrade updateSessionGrade) {
+        System.out.println(updateSessionGrade.getGradeId());
+        SessionGrade sessionGrade = sessionGradeDAO.findById(updateSessionGrade.getGradeId());
+        sessionGrade.setPromotionDate(updateSessionGrade.getDate());
+        sessionGrade.setGrade(updateSessionGrade.getGrade());
+        return new StudentGrade();
     }
 
     @Override
@@ -116,7 +124,7 @@ public class SessionGradeServiceImpl implements SessionGradeService {
     private StudentGrade createStudentGrade(SessionGrade sessionGrade) {
         StudentGrade studentGrade = new StudentGrade();
         studentGrade.setGrade(sessionGrade.getGrade());
-        studentGrade.setId(studentGrade.getId());
+        studentGrade.setId(sessionGrade.getId());
         studentGrade.setStudentName(sessionGrade.getStudentId().getFullName());
         studentGrade.setPromotionDate(sessionGrade.getPromotionDate());
         return studentGrade;
@@ -151,7 +159,7 @@ public class SessionGradeServiceImpl implements SessionGradeService {
         if(student == null) {
             throw new RuntimeException("Studentul nu este inregistrat in sesiune");
         }
-        LocalDate promotionDate = sessionGradeDTO.getPromotionDate();
+        LocalDate promotionDate = sessionGradeDTO.getPromotionDate().toLocalDate();
         if(!(promotionDate.isAfter(session.getDateStart()) && promotionDate.isBefore(session.getDateEnd()))) {
             throw new RuntimeException("Data promovari nu este in intervalul sesiuni");
         }

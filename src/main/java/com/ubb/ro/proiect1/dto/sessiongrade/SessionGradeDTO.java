@@ -10,7 +10,7 @@ public class SessionGradeDTO {
 
     private float grade;
 
-    private LocalDate promotionDate;
+    private LocalDateTime promotionDate;
 
     private int classId;
 
@@ -18,7 +18,7 @@ public class SessionGradeDTO {
 
     private int studentId;
 
-    public SessionGradeDTO(int id, float grade, LocalDate promotionDate, int classId, int sessionId, int studentId) {
+    public SessionGradeDTO(int id, float grade, LocalDateTime promotionDate, int classId, int sessionId, int studentId) {
         this.id = id;
         this.grade = grade;
         this.promotionDate = promotionDate;
@@ -27,7 +27,7 @@ public class SessionGradeDTO {
         this.studentId = studentId;
     }
 
-    public SessionGradeDTO(float grade, LocalDate promotionDate, int classId, int sessionId, int studentId) {
+    public SessionGradeDTO(float grade, LocalDateTime promotionDate, int classId, int sessionId, int studentId) {
         this.grade = grade;
         this.promotionDate = promotionDate;
         this.classId = classId;
@@ -54,11 +54,11 @@ public class SessionGradeDTO {
         this.grade = grade;
     }
 
-    public LocalDate getPromotionDate() {
+    public LocalDateTime getPromotionDate() {
         return promotionDate;
     }
 
-    public void setPromotionDate(LocalDate promotionDate) {
+    public void setPromotionDate(LocalDateTime promotionDate) {
         this.promotionDate = promotionDate;
     }
 

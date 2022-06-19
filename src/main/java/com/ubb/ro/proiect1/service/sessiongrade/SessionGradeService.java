@@ -1,9 +1,7 @@
 package com.ubb.ro.proiect1.service.sessiongrade;
 
 
-import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeDTO;
-import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeViewDTO;
-import com.ubb.ro.proiect1.dto.sessiongrade.TeacherSessionClasses;
+import com.ubb.ro.proiect1.dto.sessiongrade.*;
 import org.springframework.security.core.Authentication;
 
 import java.util.List;
@@ -15,6 +13,8 @@ public interface SessionGradeService {
     void delete(int id);
 
     SessionGradeDTO findById(int id);
+
+    StudentGrade updateStudentGrade(Authentication authentication, UpdateSessionGrade updateSessionGrade);
 
     List<SessionGradeViewDTO> getGradesForStudent(Authentication authentication);
 

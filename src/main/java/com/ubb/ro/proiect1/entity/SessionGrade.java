@@ -17,7 +17,7 @@ public class SessionGrade {
     private float grade;
 
     @Column(name = "promotion_date")
-    private LocalDate promotionDate;
+    private LocalDateTime promotionDate;
 
     @ManyToOne
     @JoinColumn(name = "id_classes")
@@ -31,7 +31,7 @@ public class SessionGrade {
     @JoinColumn(name = "id_student")
     private User studentId;
 
-    public SessionGrade(int id, float grade, LocalDate promotionDate, ClassEntity classId, SessionEntity sessionId, User studentId) {
+    public SessionGrade(int id, float grade, LocalDateTime promotionDate, ClassEntity classId, SessionEntity sessionId, User studentId) {
         this.id = id;
         this.grade = grade;
         this.promotionDate = promotionDate;
@@ -40,7 +40,7 @@ public class SessionGrade {
         this.studentId = studentId;
     }
 
-    public SessionGrade(float grade, LocalDate promotionDate, ClassEntity classId, SessionEntity sessionId, User studentId) {
+    public SessionGrade(float grade, LocalDateTime promotionDate, ClassEntity classId, SessionEntity sessionId, User studentId) {
         this.id = id;
         this.grade = grade;
         this.promotionDate = promotionDate;
@@ -70,11 +70,11 @@ public class SessionGrade {
         this.grade = grade;
     }
 
-    public LocalDate getPromotionDate() {
+    public LocalDateTime getPromotionDate() {
         return promotionDate;
     }
 
-    public void setPromotionDate(LocalDate promotionDate) {
+    public void setPromotionDate(LocalDateTime promotionDate) {
         this.promotionDate = promotionDate;
     }
 

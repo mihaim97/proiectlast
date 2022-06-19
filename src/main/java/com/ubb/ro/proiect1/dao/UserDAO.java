@@ -6,10 +6,13 @@ import java.util.List;
 
 public interface UserDAO {
 
+    void persist(User user);
+
     List<User> searchByName(String username);
 
     User searchById(int id);
 
-    List<User> queryUser();
+    List<User> searchByIdList(int id);
 
+    List<User> queryUser();
 }

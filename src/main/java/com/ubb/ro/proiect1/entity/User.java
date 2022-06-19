@@ -19,8 +19,11 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     @Column(name = "email")
     private String email;
@@ -30,6 +33,9 @@ public class User {
 
     @Column(name = "program")
     private String program;
+
+    @Column(name = "enabled")
+    private boolean enabled;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId", cascade = CascadeType.ALL)
     private Set<Role> roles;
@@ -74,14 +80,6 @@ public class User {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -112,5 +110,33 @@ public class User {
 
     public void setProgram(String program) {
         this.program = program;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 }

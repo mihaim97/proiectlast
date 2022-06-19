@@ -1,9 +1,8 @@
 package com.ubb.ro.proiect1.controller;
 
-import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeDTO;
-import com.ubb.ro.proiect1.dto.sessiongrade.TeacherSessionClasses;
+import com.ubb.ro.proiect1.dto.sessiongrade.*;
 import com.ubb.ro.proiect1.service.sessiongrade.SessionGradeService;
-import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeViewDTO;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,7 +19,17 @@ public class SessionGradeController {
 
     @PostMapping(value = "/addsessiongrade", consumes = "application/json")
     public void createPerson(Authentication authentication, @RequestBody SessionGradeDTO sessionGradeDTO) {
-        sessionGradeService.addSessionGrade(sessionGradeDTO);
+        this.sessionGradeService.addSessionGrade(sessionGradeDTO);
+    }
+
+    @DeleteMapping(value = "/sessionGrade/delete", consumes = "application/json")
+    public void deleteSessionGrade(Authentication authentication, @RequestParam(name = "sessionGradeId") int id) {
+        this.sessionGradeService.delete(id);
+    }
+
+    @PatchMapping(value = "/sessionGrade/update", consumes = "application/json")
+    public ResponseEntity<StudentGrade> createPerson(Authentication authentication, @RequestBody UpdateSessionGrade updateSessionGrade) {
+        return ResponseEntity.ok(this.sessionGradeService.updateStudentGrade(authentication, updateSessionGrade));
     }
 
     @GetMapping("/sessionGrades/{id}")

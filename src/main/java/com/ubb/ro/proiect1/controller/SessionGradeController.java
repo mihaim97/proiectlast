@@ -1,6 +1,7 @@
 package com.ubb.ro.proiect1.controller;
 
 import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeDTO;
+import com.ubb.ro.proiect1.dto.sessiongrade.TeacherSessionClasses;
 import com.ubb.ro.proiect1.service.sessiongrade.SessionGradeService;
 import com.ubb.ro.proiect1.dto.sessiongrade.SessionGradeViewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,20 +13,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-
 public class SessionGradeController {
 
     @Autowired
     private SessionGradeService sessionGradeService;
 
     @PostMapping(value = "/addsessiongrade", consumes = "application/json")
-    public void createPerson(@RequestBody SessionGradeDTO sessionGradeDTO) {
+    public void createPerson(Authentication authentication, @RequestBody SessionGradeDTO sessionGradeDTO) {
         sessionGradeService.addSessionGrade(sessionGradeDTO);
     }
 
     @GetMapping("/sessionGrades/{id}")
     public SessionGradeDTO getAll(@PathVariable String id) {
         return this.sessionGradeService.findById(Integer.parseInt(id));
+    }
+
+    @GetMapping("/sessionGrades/all/teacher/classes")
+    public ResponseEntity<List<TeacherSessionClasses>> allTeacherClassesInSessions(Authentication authentication) {
+        return ResponseEntity.ok(this.sessionGradeService.allTeacherClasses(authentication));
     }
 
     @GetMapping("/grades")

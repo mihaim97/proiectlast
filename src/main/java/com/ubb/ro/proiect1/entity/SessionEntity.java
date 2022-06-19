@@ -31,10 +31,10 @@ public class SessionEntity {
     @Column(name = "semester")
     private int semester;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sessionId")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sessionId", cascade = CascadeType.ALL)
     private List<SessionGrade> sessionGrades;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(
             name = "pr_session_calsses",
             joinColumns = {@JoinColumn(name = "id_session")},
@@ -42,7 +42,7 @@ public class SessionEntity {
     )
     private List<ClassEntity> classes;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(
             name = "pr_session_student",
             joinColumns = {@JoinColumn(name = "id_session")},

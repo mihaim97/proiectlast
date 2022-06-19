@@ -48,4 +48,20 @@ public class SessionDAOImpl implements SessionDAO {
     public List<SessionEntity> queryForYear(int year) {
         return null;
     }
+
+    @Override
+    public List<SessionEntity> queryAll() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from SessionEntity", SessionEntity.class).getResultList();
+    }
+
+    @Override
+    public List<SessionEntity> querySessionForTeacher(int teacherId) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("select distinct se from SessionEntity se " +
+                        "join fetch se.classes cls join fetch cls.teacherId te " +
+                        "where te.id = :id ", SessionEntity.class)
+                .setParameter("id", teacherId)
+                .getResultList();
+    }
 }

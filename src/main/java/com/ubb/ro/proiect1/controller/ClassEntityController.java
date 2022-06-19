@@ -1,6 +1,7 @@
 package com.ubb.ro.proiect1.controller;
 
 import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTO;
+import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTO2;
 import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTOView;
 import com.ubb.ro.proiect1.service.classentity.ClassEntityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,12 @@ public class ClassEntityController {
     public ResponseEntity<List<ClassEntityDTOView>> getAll(Authentication authentication){
         return ResponseEntity.ok(this.classEntityService.getClasses(authentication));
     }
+
+    @GetMapping("/classes/all")
+    public ResponseEntity<List<ClassEntityDTO2>> allClasses(Authentication authentication){
+        return ResponseEntity.ok(this.classEntityService.allClasses(authentication));
+    }
+
     @PostMapping(value = "/addclass", consumes = "application/json")
     public void addClass(@RequestBody ClassEntityDTO classEntityDTO){
         classEntityService.addClass(classEntityDTO);

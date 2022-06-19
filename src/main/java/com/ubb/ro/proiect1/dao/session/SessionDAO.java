@@ -16,4 +16,8 @@ public interface SessionDAO {
 
     List<SessionEntity> queryForYear(int year);
 
+    List<SessionEntity> queryAll();
+
+    List<SessionEntity> querySessionForTeacher(int teacherId);
+
 }

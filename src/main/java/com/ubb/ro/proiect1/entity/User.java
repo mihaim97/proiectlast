@@ -1,7 +1,7 @@
 package com.ubb.ro.proiect1.entity;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -25,10 +25,29 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "year")
+    private int year;
+
+    @Column(name = "program")
+    private String program;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId", cascade = CascadeType.ALL)
     private Set<Role> roles;
 
     public User() {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public int getId() {
@@ -77,5 +96,21 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public String getProgram() {
+        return program;
+    }
+
+    public void setProgram(String program) {
+        this.program = program;
     }
 }

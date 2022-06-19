@@ -10,4 +10,6 @@ public interface UserDAO {
 
     User searchById(int id);
 
+    List<User> queryUser();
+
 }

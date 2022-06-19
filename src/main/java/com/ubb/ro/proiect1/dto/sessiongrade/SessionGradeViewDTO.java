@@ -8,11 +8,11 @@ public class SessionGradeViewDTO {
 
     private float grade;
 
-    private LocalDateTime promotionDate;
+    private LocalDate promotionDate;
 
     private String className;
 
-    public SessionGradeViewDTO(float grade, LocalDateTime promotionDate, String className) {
+    public SessionGradeViewDTO(float grade, LocalDate promotionDate, String className) {
         this.grade = grade;
         this.promotionDate = promotionDate;
         this.className = className;
@@ -29,11 +29,11 @@ public class SessionGradeViewDTO {
         this.grade = grade;
     }
 
-    public LocalDateTime getPromotionDate() {
+    public LocalDate getPromotionDate() {
         return promotionDate;
     }
 
-    public void setPromotionDate(LocalDateTime promotionDate) {
+    public void setPromotionDate(LocalDate promotionDate) {
         this.promotionDate = promotionDate;
     }
 

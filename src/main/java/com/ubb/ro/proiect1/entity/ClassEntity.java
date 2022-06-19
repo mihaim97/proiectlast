@@ -89,11 +89,11 @@ public class ClassEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClassEntity that = (ClassEntity) o;
-        return semester == that.semester && credits == that.credits && name.equals(that.name);
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, semester, credits);
+        return Objects.hash(id);
     }
 }

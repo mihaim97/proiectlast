@@ -4,6 +4,7 @@ import com.ubb.ro.proiect1.dao.UserDAO;
 import com.ubb.ro.proiect1.dao.classentity.ClassEntityDAO;
 import com.ubb.ro.proiect1.dao.session.SessionDAO;
 import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTO;
+import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTO2;
 import com.ubb.ro.proiect1.dto.classentity.ClassEntityDTOView;
 import com.ubb.ro.proiect1.entity.ClassEntity;
 import com.ubb.ro.proiect1.entity.User;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import javax.swing.*;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,6 +60,22 @@ public class ClassEntityServiceImpl implements ClassEntityService {
             return this.classEntityDAO.findAll().stream().map(this::toDto).collect(Collectors.toList());
         }
         return null;
+    }
+
+    @Override
+    @Transactional
+    public List<ClassEntityDTO2> allClasses(Authentication authentication) {
+        return this.classEntityDAO.findAll().stream().map(this::toDto2).collect(Collectors.toList());
+    }
+
+    private ClassEntityDTO2 toDto2(ClassEntity classEntity) {
+        ClassEntityDTO2 dto = new ClassEntityDTO2();
+        dto.setCredits(classEntity.getCredits());
+        dto.setName(classEntity.getName());
+        dto.setSemester(classEntity.getSemester());
+        dto.setId(classEntity.getId());
+        dto.setTeacherName(classEntity.getTeacherId().getFullName());
+        return dto;
     }
 
     private ClassEntityDTOView toDto(ClassEntity classEntity) {

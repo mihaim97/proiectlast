@@ -1,5 +1,6 @@
 package com.ubb.ro.proiect1.dao;
 
+import com.ubb.ro.proiect1.entity.Role;
 import com.ubb.ro.proiect1.entity.User;
 
 import java.util.List;
@@ -7,6 +8,8 @@ import java.util.List;
 public interface UserDAO {
 
     void persist(User user);
+
+    void persistRole(Role role);
 
     List<User> searchByName(String username);
 

@@ -6,6 +6,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class SessionGradeController {
     private SessionGradeService sessionGradeService;
 
     @PostMapping(value = "/addsessiongrade", consumes = "application/json")
-    public void createPerson(Authentication authentication, @RequestBody SessionGradeDTO sessionGradeDTO) {
-        this.sessionGradeService.addSessionGrade(sessionGradeDTO);
+    public ResponseEntity<StudentGrade> createPerson(Authentication authentication, @RequestBody SessionGradeDTO sessionGradeDTO) {
+        return ResponseEntity.ok(this.sessionGradeService.addSessionGrade(sessionGradeDTO));
     }
 
     @DeleteMapping(value = "/sessionGrade/delete", consumes = "application/json")

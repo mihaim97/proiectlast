@@ -1,9 +1,6 @@
 package com.ubb.ro.proiect1.controller;
 
-import com.ubb.ro.proiect1.dto.user.ChangePassword;
-import com.ubb.ro.proiect1.dto.user.NewUserDTO;
-import com.ubb.ro.proiect1.dto.user.UserDTO;
-import com.ubb.ro.proiect1.dto.user.UserFullInfoDTO;
+import com.ubb.ro.proiect1.dto.user.*;
 import com.ubb.ro.proiect1.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +35,26 @@ public class SuperAdminController {
     @PatchMapping("changePassword")
     public ResponseEntity<String> changePassword(Authentication authentication, @RequestBody ChangePassword changePassword) {
         this.userService.changeUserPassword(authentication, changePassword.getUserId(), changePassword.getPassword());
+        return ResponseEntity.ok("{\"response\":\"ok\"}");
+    }
+
+    @PostMapping("add/role")
+    public ResponseEntity<String> addRole(Authentication authentication, @RequestBody NewRole role) {
+        this.userService.addUserRole(authentication, role);
+        return ResponseEntity.ok("{\"response\":\"ok\"}");
+    }
+
+    @GetMapping("role/list")
+    public ResponseEntity<List<UserRoleDTO>> userRoles(Authentication authentication,
+                                            @RequestParam("userId") int userId) {
+        return ResponseEntity.ok(this.userService.queryAllRole(authentication, userId));
+    }
+
+    @DeleteMapping("delete/role")
+    public ResponseEntity<String> deleteRole(Authentication authentication,
+                                             @RequestParam("userId") int userId,
+                                             @RequestParam("roleId") int roleId) {
+        this.userService.deleteRole(authentication, userId, roleId);
         return ResponseEntity.ok("{\"response\":\"ok\"}");
     }
 

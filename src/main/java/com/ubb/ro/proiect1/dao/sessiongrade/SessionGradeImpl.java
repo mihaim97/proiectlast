@@ -18,6 +18,7 @@ public class SessionGradeImpl implements SessionGradeDAO{
     public void persist(SessionGrade sessionGradeEntity) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(sessionGradeEntity);
+        session.flush();
     }
 
     @Override

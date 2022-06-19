@@ -40,7 +40,7 @@ public class SessionGradeServiceImpl implements SessionGradeService {
 
     @Override
     @Transactional
-    public void addSessionGrade(SessionGradeDTO sessionGradeDTO) {
+    public StudentGrade addSessionGrade(SessionGradeDTO sessionGradeDTO) {
         ClassEntity classEntity = this.classEntityDAO.findById(sessionGradeDTO.getClassId());
         SessionEntity session = this.sessionDAO.findById(sessionGradeDTO.getSessionId());
         User user = this.userDAO.searchById(sessionGradeDTO.getStudentId());
@@ -48,6 +48,7 @@ public class SessionGradeServiceImpl implements SessionGradeService {
         SessionGrade sessionGrade = new SessionGrade(sessionGradeDTO.getGrade(), sessionGradeDTO.getPromotionDate(),
                 classEntity, session, user);
         sessionGradeDAO.persist(sessionGrade);
+        return this.createStudentGrade(sessionGrade);
     }
 
     @Override

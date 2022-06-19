@@ -24,4 +24,6 @@ public interface UserService {
 
     void deleteRole(Authentication authentication, int userId, int roleId);
 
+    List<UserRoleDTO> queryAllRole(Authentication authentication, int userId);
+
 }

@@ -3,8 +3,10 @@ package com.ubb.ro.proiect1.security;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ubb.ro.proiect1.entity.User;
 import com.ubb.ro.proiect1.security.util.JwtProperties;
 import com.ubb.ro.proiect1.security.util.LogIn;
+import com.ubb.ro.proiect1.service.user.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -24,8 +26,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private AuthenticationManager authenticationManager;
 
-    public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
+    private UserService userService;
+
+    public JwtAuthenticationFilter(AuthenticationManager authenticationManager, UserService userService) {
        this.authenticationManager = authenticationManager;
+       this.userService = userService;
     }
 
     @Override
@@ -45,6 +50,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
         PersonalUserDetails personalUserDetails = (PersonalUserDetails)authResult.getPrincipal();
+        User user = this.userService.loadUser(personalUserDetails.getUsername());
         String token = JWT.create()
                             .withSubject(personalUserDetails.getUsername())
                             .withExpiresAt(new Date(System.currentTimeMillis() + JwtProperties.EXPIRATION_TIME))
@@ -58,6 +64,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Expose roles
         response.addHeader("Access-Control-Expose-Headers", JwtProperties.ROLES);
         response.addHeader(JwtProperties.ROLES, personalUserDetails.getAuthorities().toString());
+
+        response.addHeader("Access-Control-Expose-Headers", "FullAuthority");
+        response.addHeader("FullAuthority", user.getFullName());
         System.out.println("Success ---");
     }
 }

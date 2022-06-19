@@ -1,5 +1,6 @@
 package com.ubb.ro.proiect1.dao;
 
+import com.ubb.ro.proiect1.entity.Role;
 import com.ubb.ro.proiect1.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -18,6 +19,12 @@ public class UserDAOImpl implements UserDAO {
     public void persist(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(user);
+    }
+
+    @Override
+    public void persistRole(Role role) {
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(role);
     }
 
     @Override

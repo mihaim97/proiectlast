@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SessionGradeService {
 
-    void addSessionGrade(SessionGradeDTO sessionGrade);
+    StudentGrade addSessionGrade(SessionGradeDTO sessionGrade);
 
     void delete(int id);
 

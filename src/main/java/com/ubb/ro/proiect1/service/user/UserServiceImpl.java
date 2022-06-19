@@ -87,6 +87,27 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void deleteRole(Authentication authentication, int userId, int roleId) {
         User user = SingleResultFromList.getSingleResult(this.userDAO.searchByIdList(userId));
+        if(user != null) {
+            Role role = user.getRoles().stream().filter(ro->ro.getId() == roleId).findFirst().orElse(null);
+            if(role != null) {
+                user.getRoles().remove(role);
+                role.setUserId(null);
+            }
+        }
+    }
+
+    @Override
+    @Transactional
+    public List<UserRoleDTO> queryAllRole(Authentication authentication, int userId) {
+        User user = SingleResultFromList.getSingleResult(this.userDAO.searchByIdList(userId));
+        if(user != null) {
+            return user.getRoles().stream().map(this::userRoleDTO).collect(Collectors.toList());
+        }
+        throw new RuntimeException("No user found with given id");
+    }
+
+    private UserRoleDTO userRoleDTO(Role role) {
+        return new UserRoleDTO(role.getId(), role.getRole());
     }
 
     private UserDTO userList(User user) {

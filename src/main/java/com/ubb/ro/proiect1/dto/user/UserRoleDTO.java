@@ -6,6 +6,11 @@ public class UserRoleDTO {
 
     private String role;
 
+    public UserRoleDTO(int id, String role) {
+        this.id = id;
+        this.role = role;
+    }
+
     public UserRoleDTO() {
     }
 

@@ -9,6 +9,7 @@ import com.ubb.ro.proiect1.entity.ClassEntity;
 import com.ubb.ro.proiect1.entity.SessionEntity;
 import com.ubb.ro.proiect1.entity.SessionGrade;
 import com.ubb.ro.proiect1.entity.User;
+import com.ubb.ro.proiect1.security.util.exception.SessionGradeException;
 import com.ubb.ro.proiect1.util.SingleResultFromList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -154,15 +155,20 @@ public class SessionGradeServiceImpl implements SessionGradeService {
 
     private void validateData(SessionEntity session, ClassEntity classEntity, SessionGradeDTO sessionGradeDTO, User user) {
         User student = session.getStudents().stream().filter(el->el.getId() == user.getId()).findFirst().orElse(null);
+        SessionGrade userGrade = session.getSessionGrades().stream().filter(el->el.getStudentId().getId() == user.getId())
+                .findFirst().orElse(null);
         if(!session.getClasses().contains(classEntity)) {
-            throw new RuntimeException("Materia nu face parte din sesiunea curenta");
+            throw new SessionGradeException("Materia nu face parte din sesiunea curenta");
         }
         if(student == null) {
-            throw new RuntimeException("Studentul nu este inregistrat in sesiune");
+            throw new SessionGradeException("Studentul nu este inregistrat in sesiune");
+        }
+        if(userGrade != null) {
+            throw new SessionGradeException("Studentul are o nota existenta");
         }
         LocalDate promotionDate = sessionGradeDTO.getPromotionDate().toLocalDate();
         if(!(promotionDate.isAfter(session.getDateStart()) && promotionDate.isBefore(session.getDateEnd()))) {
-            throw new RuntimeException("Data promovari nu este in intervalul sesiuni");
+            throw new SessionGradeException("Data promovari nu este in intervalul sesiuni");
         }
     }
 }

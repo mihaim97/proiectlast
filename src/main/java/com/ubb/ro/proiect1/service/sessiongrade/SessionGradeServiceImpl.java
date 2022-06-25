@@ -143,6 +143,16 @@ public class SessionGradeServiceImpl implements SessionGradeService {
         dto.setSessionYear(session.getUniversityYear());
         dto.setSessionId(session.getId());
         return dto;
+    public List<SessionGradeViewDTO> getPromotedStudentsByClassId(int classId) {
+        return this.sessionGradeDAO.getPromotedStudentsByClassId(classId)
+                .stream().map(this::toDto).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public List<SessionGradeViewDTO> getFailedStudentsByClassId(int classId) {
+        return this.sessionGradeDAO.getFailedStudentsByClassId(classId)
+                .stream().map(this::toDto).collect(Collectors.toList());
     }
 
     private SessionGradeViewDTO toDto(SessionGrade sessionGrade) {

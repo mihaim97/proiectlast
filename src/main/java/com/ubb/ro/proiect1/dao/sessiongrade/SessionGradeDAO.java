@@ -13,4 +13,8 @@ public interface SessionGradeDAO {
 
     List<SessionGrade> findForUser(int userId);
 
+    List<SessionGrade> getPromotedStudentsByClassId(int userId);
+
+    List<SessionGrade> getFailedStudentsByClassId(int userId);
+
 }

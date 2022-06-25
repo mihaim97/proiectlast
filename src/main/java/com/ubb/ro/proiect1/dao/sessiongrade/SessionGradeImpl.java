@@ -40,4 +40,23 @@ public class SessionGradeImpl implements SessionGradeDAO{
         return session.createQuery("from SessionGrade sg where sg.studentId.id =:id", SessionGrade.class)
                 .setParameter("id", userId).getResultList();
     }
+
+    @Override
+    public List<SessionGrade> getPromotedStudentsByClassId(int classId) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from SessionGrade sg where sg.classId.id =:id and sg.grade > 4 ", SessionGrade.class)
+                .setParameter("id", classId).getResultList();
+    }
+
+    @Override
+    public List<SessionGrade> getFailedStudentsByClassId(int classId) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from SessionGrade sg where sg.classId.id =:id and sg.grade < 5 ", SessionGrade.class)
+                .setParameter("id", classId).getResultList();
+    }
+
+
+
+
+
 }

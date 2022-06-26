@@ -32,4 +32,9 @@ public class ClassEntityController {
     public void addClass(@RequestBody ClassEntityDTO classEntityDTO){
         classEntityService.addClass(classEntityDTO);
     }
+
+    @GetMapping(value = "teacherClasses")
+    public ResponseEntity<List<ClassEntityDTO2>> teacherClass(Authentication authentication) {
+        return ResponseEntity.ok(this.classEntityService.allTeacherClass(authentication));
+    }
 }

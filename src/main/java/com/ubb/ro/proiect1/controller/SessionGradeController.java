@@ -58,4 +58,10 @@ public class SessionGradeController {
         return this.sessionGradeService.getFailedStudentsByClassId(Integer.parseInt(id));
     }
 
+    @GetMapping("/statistics")
+    public StatisticsDTO statistics(Authentication authentication,
+                                                @RequestParam(name = "sessionId") int sessionId,
+                                                @RequestParam(name = "classId") int classId) {
+        return this.sessionGradeService.statisticsForTeacher(authentication, sessionId, classId);
+    }
 }

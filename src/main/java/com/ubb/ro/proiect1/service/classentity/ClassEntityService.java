@@ -19,4 +19,7 @@ public interface ClassEntityService {
     List<ClassEntityDTOView> getClasses(Authentication authentication);
 
     List<ClassEntityDTO2> allClasses(Authentication authentication);
+
+    List<ClassEntityDTO2> allTeacherClass(Authentication authentication);
+
 }

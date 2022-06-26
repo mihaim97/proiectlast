@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.*;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -66,6 +67,16 @@ public class ClassEntityServiceImpl implements ClassEntityService {
     @Transactional
     public List<ClassEntityDTO2> allClasses(Authentication authentication) {
         return this.classEntityDAO.findAll().stream().map(this::toDto2).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public List<ClassEntityDTO2> allTeacherClass(Authentication authentication) {
+        User user = SingleResultFromList.getSingleResult(this.userDAO.searchByName(authentication.getName()));
+        if(user != null) {
+            return user.getTeacherClasses().stream().map(this::toDto2).collect(Collectors.toList());
+        }
+        return new ArrayList<>();
     }
 
     private ClassEntityDTO2 toDto2(ClassEntity classEntity) {

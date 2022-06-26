@@ -1,6 +1,7 @@
 package com.ubb.ro.proiect1.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -39,6 +40,9 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId", cascade = CascadeType.ALL)
     private Set<Role> roles;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teacherId")
+    private List<ClassEntity> teacherClasses;
 
     public User() {
     }
@@ -138,5 +142,13 @@ public class User {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public List<ClassEntity> getTeacherClasses() {
+        return teacherClasses;
+    }
+
+    public void setTeacherClasses(List<ClassEntity> teacherClasses) {
+        this.teacherClasses = teacherClasses;
     }
 }

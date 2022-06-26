@@ -24,4 +24,6 @@ public interface SessionGradeService {
 
     List<SessionGradeViewDTO> getFailedStudentsByClassId(int classId);
 
+    StatisticsDTO statisticsForTeacher(Authentication authentication, int sessionId, int classesId);
+
 }

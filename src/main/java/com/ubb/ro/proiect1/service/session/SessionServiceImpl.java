@@ -9,6 +9,7 @@ import com.ubb.ro.proiect1.entity.ClassEntity;
 import com.ubb.ro.proiect1.entity.SessionEntity;
 import com.ubb.ro.proiect1.entity.SessionGrade;
 import com.ubb.ro.proiect1.entity.User;
+import com.ubb.ro.proiect1.security.util.exception.SessionGradeException;
 import com.ubb.ro.proiect1.util.SingleResultFromList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,9 @@ public class SessionServiceImpl implements SessionService {
     @Transactional
     public void addNewSession(SessionDTO sessionDTO) {
         SessionEntity session = new SessionEntity();
+        if(sessionDTO.getDateEnd().isBefore(sessionDTO.getDateStart())) {
+            throw new SessionGradeException("Data de sfarsit nu poate sa fie inainte de data de inceput");
+        }
         session.setDateCreated(LocalDate.now());
         session.setDateStart(sessionDTO.getDateStart());
         session.setDateEnd(sessionDTO.getDateEnd());
